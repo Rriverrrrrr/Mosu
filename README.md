@@ -15,12 +15,17 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
     
     
-This is a project to create a universal physics engine out of nothing.
-It is named after Hae Mo-su, who founded the Korean city of Buyeo from nothing. 
-(There's not a ton of symbolism here, I just wanted something from Korean mythology that sounded like a good software name.)
+This is a project to create a universal physics engine that is completely open-source.
 
+# USE
+To use this program, simply run the mosu.class file in the source directory. It will open in a terminal window, and will prompt you to assign values to various variables. Please only input real numbers.
+
+# ABOUT
 Currently, this program is basically nothing; it will evolve over time, with small updates releasing weekly.
 Someday, it will hopefully be a professional software that is powerful and accurate enough to become the industry standard, but that is for the distant future.
+
+It is named after Hae Mo-su, who founded the Korean city of Buyeo from nothing. 
+(There's not a ton of symbolism here, I just wanted something from Korean mythology that sounded like a good software name.)
 
 This project will be open-source, use nothing more than what is pre-installed with Java (except maybe to convert models from other programs or something), and will under no circumstances ever involve the use of generative AI.
 This will reflect the true capabilities of computers: do math really fast and let you look at stuff.
