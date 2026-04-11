@@ -1,4 +1,4 @@
-    /*Mosu Universal Physics Engine v0.0, released 04-04-2026
+    /*Mosu Universal Physics Engine v0.1, released 04-10-2026
     Copyright (C) 2026 River Olsen
 
     This program is free software: you can redistribute it and/or modify
@@ -15,13 +15,47 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
     
 import java.lang.Math;
+import java.util.Scanner;
 
 class Kine{
-	public static double solveVf(double vi, double a, double t){
-		return vi + (a * t); //Solves for final velocity
-	}
+	public static void kinematics(){
+			//Initialize stuff
+		Scanner input = new Scanner(System.in);
+		double t; //time (seconds)
+		String temp;
+		
+		//Prompt user for variable values
+		System.out.println("For velocity and acceleration, enter as a 3-dimensional vector separated by spaces, eg. \"0 0 0\".");
+		System.out.print("Initial velocity (m/s): ");
+		temp = input.nextLine();
+		Vector vi = new Vector(temp); //Initial velocity
+		System.out.print("Time (s): ");
+		t = input.nextDouble();
+		input.nextLine();
+		System.out.print("Acceleration (m/s/s): ");
+		temp = input.nextLine();
+		Vector a = new Vector(temp); //Acceleration
+		
+		//Solve final velocity
+		Vector vf = solveVf(vi, a, t);
+		System.out.println("\nFinal velocity: " + vf.toString() + "; " + vf.scalar() + " m/s");
+		
+		//Solve change in position
+		Vector s = solveDX(vi, a, t);
+		System.out.println("Change in position: " + s.toString() + "; " + s.scalar() + " m");
+	};
 	
-	public static double solveDX(double vi, double a, double t){
-		return (vi * t) + (0.5 * a * Math.pow(t, 2)); //Solves for final position
+	private static Vector solveVf(Vector v0, Vector ac, double t){
+		double x = v0.crd[0] + (ac.crd[0] * t);
+		double y = v0.crd[1] + (ac.crd[1] * t);
+		double z = v0.crd[2] + (ac.crd[2] * t);
+		return new Vector(x, y, z); //Solves for final velocity
+	};
+	
+	private static Vector solveDX(Vector v0, Vector ac, double t){
+		double x = (v0.crd[0] * t) + (0.5 * ac.crd[0] * Math.pow(t, 2));
+		double y = (v0.crd[1] * t) + (0.5 * ac.crd[1] * Math.pow(t, 2));
+		double z = (v0.crd[2] * t) + (0.5 * ac.crd[2] * Math.pow(t, 2));
+		return new Vector(x, y, z); //Solves for final position
 	};
 }
