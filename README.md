@@ -18,7 +18,7 @@
 This is a project to create a universal physics engine that is completely open-source.
 
 # USE
-To use this program, simply run the mosu.class file in the source directory. It will open in a terminal window, and will prompt you to assign values to various variables. Please only input real numbers.
+To use this program, download Mosu.jar and run "java -jar Mosu.jar" in your Linux terminal. Make sure you have Java installed.
 
 # ABOUT
 Currently, this program is basically nothing; it will evolve over time, with small updates releasing weekly.
