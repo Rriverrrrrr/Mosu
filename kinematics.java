@@ -1,4 +1,4 @@
-    /*Mosu Universal Physics Engine v0.1, released 04-10-2026
+    /*Mosu Universal Physics Engine v0.2, released 04-19-2026
     Copyright (C) 2026 River Olsen
 
     This program is free software: you can redistribute it and/or modify
@@ -28,34 +28,34 @@ class Kine{
 		System.out.println("For velocity and acceleration, enter as a 3-dimensional vector separated by spaces, eg. \"0 0 0\".");
 		System.out.print("Initial velocity (m/s): ");
 		temp = input.nextLine();
-		Vector vi = new Vector(temp); //Initial velocity
+		Vector vi = new Vector(temp, "velocity"); //Initial velocity
 		System.out.print("Time (s): ");
 		t = input.nextDouble();
 		input.nextLine();
 		System.out.print("Acceleration (m/s/s): ");
 		temp = input.nextLine();
-		Vector a = new Vector(temp); //Acceleration
+		Vector a = new Vector(temp, "acceleration"); //Acceleration
 		
 		//Solve final velocity
 		Vector vf = solveVf(vi, a, t);
-		System.out.println("\nFinal velocity: " + vf.toString() + "; " + vf.scalar() + " m/s");
+		System.out.println("\nFinal velocity: " + vf.toString());
 		
 		//Solve change in position
 		Vector s = solveDX(vi, a, t);
-		System.out.println("Change in position: " + s.toString() + "; " + s.scalar() + " m");
+		System.out.println("Change in position: " + s.toString());
 	};
 	
 	private static Vector solveVf(Vector v0, Vector ac, double t){
 		double x = v0.crd[0] + (ac.crd[0] * t);
 		double y = v0.crd[1] + (ac.crd[1] * t);
 		double z = v0.crd[2] + (ac.crd[2] * t);
-		return new Vector(x, y, z); //Solves for final velocity
+		return new Vector(x, y, z, "velocity"); //Solves for final velocity
 	};
 	
 	private static Vector solveDX(Vector v0, Vector ac, double t){
 		double x = (v0.crd[0] * t) + (0.5 * ac.crd[0] * Math.pow(t, 2));
 		double y = (v0.crd[1] * t) + (0.5 * ac.crd[1] * Math.pow(t, 2));
 		double z = (v0.crd[2] * t) + (0.5 * ac.crd[2] * Math.pow(t, 2));
-		return new Vector(x, y, z); //Solves for final position
+		return new Vector(x, y, z, "position"); //Solves for final position
 	};
 }
