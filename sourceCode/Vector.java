@@ -1,4 +1,4 @@
-    /*Mosu Universal Physics Engine v0.2, released 04-19-2026
+    /*Mosu Universal Physics Engine v0.2.1, released 04-25-2026
     Copyright (C) 2026 River Olsen
 
     This program is free software: you can redistribute it and/or modify
