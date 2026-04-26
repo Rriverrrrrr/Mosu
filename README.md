@@ -18,7 +18,7 @@
 This is a project to create a universal physics engine that is completely open-source.
 
 # USE
-To use this program, download Mosu.jar and run "java -jar Mosu.jar" in your Linux terminal. Make sure you have Java installed.
+To use this program, download Mosu.jar and run "java -jar Mosu.jar" in your Linux terminal or Windows PowerShell. Make sure you have the latest version of Java installed.
 
 # ABOUT
 Currently, this program is basically nothing; it will evolve over time, with small updates releasing weekly.
