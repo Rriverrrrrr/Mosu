@@ -19,7 +19,8 @@ import java.util.Scanner;
 import java.util.Arrays;
 
 class Gravity{
-	static final double gravConst = 6.6743 * Math.pow(10, -11);
+	static int[] dimTemp = {-2, 3, -1, 0, 0, 0, 0}; //Holds dimension array to use as input
+	static final Scalar gravConst = new Scalar(6.6743 * Math.pow(10, -11), dimTemp);
 	static Scanner input = new Scanner(System.in);
 	static Point[] pts = new Point[2];
 	static String temp;
@@ -32,7 +33,7 @@ class Gravity{
 			System.out.println("Please enter a command: ");
 		
 			String command = input.nextLine();
-			String[] commPart = Mosu.getCommand(command);
+			String[] commPart = Comm.getCommand(command);
 		
 			if (commPart[0].equals("setPoint0") == true){ //Creates command to create the first point
 		
@@ -42,10 +43,10 @@ class Gravity{
 			
 				System.out.println("Enter initial velocity: ");
 				temp = input.nextLine();
-				pts[0].setVel(Vector.conv(temp, "velocity"));
+				pts[0].setVel(Vector.conv(temp, Dim.vel));
 			
 				System.out.println("Enter mass: ");
-				pts[0].mass = input.nextDouble();
+				pts[0].mass.value = input.nextDouble();
 			
 				System.out.println("Point 0 setup complete.");
 			
@@ -58,10 +59,10 @@ class Gravity{
 				
 				System.out.println("Enter initial velocity vector: ");
 				temp = input.nextLine();
-				pts[1].setVel(Vector.conv(temp, "velocity"));
+				pts[1].setVel(Vector.conv(temp, Dim.vel));
 			
 				System.out.println("Enter mass: ");
-				pts[1].mass = input.nextDouble();
+				pts[1].mass.value = input.nextDouble();
 			
 				System.out.println("Point 1 setup complete.");
 			
@@ -96,30 +97,31 @@ class Gravity{
 					System.out.println("Point 0: \n" + pts[0]);
 					System.out.println("Point 1: \n" + pts[1]);
 					System.out.println("Force: " + calcGForce(pts[0], pts[1]) + "\n");
-					System.out.println("Distance: \n" + Vector.getDist(pts[0].position, pts[1].position) + " meters\n\n");
+					System.out.println("Distance: \n" + Vector.getDist(pts[0].position, pts[1].position).value + " meters\n\n");
 				};
 				
 				pts[0].timeStep(1.0 / 1024.0);
 				pts[1].timeStep(1.0 / 1024.0);
-				Point.time -= (1.0 / 1024.0); //Temporary measure to keep time consistent
+				Point.time.value -= (1.0 / 1024.0); //Temporary measure to keep time consistent
 			}
 		}
 	}
 	
 	private static Vector calcGForce(Point a, Point b){ //Calculates the gravitational force that point b exerts on point a
-		Vector disp = Vector.getDisp(a.position, b.position, "position"); //Displacement vector between points
+		Vector disp = Vector.getDisp(a.position, b.position); //Displacement vector between points
 		
-		double forceMag = gravConst * ((a.mass * b.mass) / Math.pow(disp.scalar(), 2)); //Calculates magnitude of force with gravity formula
-		
+		//double forceMag = gravConst * ((a.mass * b.mass) / Math.pow(disp.scalar(), 2)); //Calculates magnitude of force with gravity formula
+		Scalar forceMag = Scalar.mult(gravConst, Scalar.mult(Scalar.mult(a.mass, b.mass), disp.scalar().pow(-2))); //Calculates magnitude of force
 		Vector gForce = Vector.multiplyScalar(Vector.unitVector(disp), forceMag); //Sets grav force to unit vector times magnitude
-		gForce.setType("force");
+		
+		Dim.check(gForce.dim, Dim.frc); //Checks that gforce measured in Newtons
 		return gForce;		
 	}
 	
 	private static Vector calcGAcc(Point a, Point b){ //Calculates gravity acceleration of point a
-		Vector gAcc = Vector.multiplyScalar(calcGForce(a, b), 1.0 / a.mass);
+		Vector gAcc = Vector.multiplyScalar(calcGForce(a, b), a.mass.pow(-1));
 		
-		gAcc.setType("acceleration");
+		Dim.check(gAcc.dim, Dim.acc);
 		return gAcc;
 	}
 	

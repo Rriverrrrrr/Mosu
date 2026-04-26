@@ -1,4 +1,4 @@
-    /*Mosu Universal Physics Engine v0.2, released 04-19-2026
+    /*Mosu Universal Physics Engine v0.2.1, released 04-26-2026
     Copyright (C) 2026 River Olsen
 
     This program is free software: you can redistribute it and/or modify
@@ -21,20 +21,20 @@ class Kine{
 	public static void kinematics(){
 			//Initialize stuff
 		Scanner input = new Scanner(System.in);
-		double t; //time (seconds)
+		Scalar t = new Scalar(0, Dim.tim); //time (seconds)
 		String temp;
 		
 		//Prompt user for variable values
 		System.out.println("For velocity and acceleration, enter as a 3-dimensional vector separated by spaces, eg. \"0 0 0\".");
 		System.out.print("Initial velocity (m/s): ");
 		temp = input.nextLine();
-		Vector vi = new Vector(temp, "velocity"); //Initial velocity
+		Vector vi = new Vector(temp, Dim.vel); //Initial velocity
 		System.out.print("Time (s): ");
-		t = input.nextDouble();
+		t.value = input.nextDouble();
 		input.nextLine();
 		System.out.print("Acceleration (m/s/s): ");
 		temp = input.nextLine();
-		Vector a = new Vector(temp, "acceleration"); //Acceleration
+		Vector a = new Vector(temp, Dim.acc); //Acceleration
 		
 		//Solve final velocity
 		Vector vf = solveVf(vi, a, t);
@@ -45,17 +45,11 @@ class Kine{
 		System.out.println("Change in position: " + s.toString());
 	};
 	
-	private static Vector solveVf(Vector v0, Vector ac, double t){
-		double x = v0.crd[0] + (ac.crd[0] * t);
-		double y = v0.crd[1] + (ac.crd[1] * t);
-		double z = v0.crd[2] + (ac.crd[2] * t);
-		return new Vector(x, y, z, "velocity"); //Solves for final velocity
+	private static Vector solveVf(Vector v0, Vector ac, Scalar time){
+		return Vector.addVectors(v0, Vector.multiplyScalar(ac, time)); //Calculates final velocity
 	};
 	
-	private static Vector solveDX(Vector v0, Vector ac, double t){
-		double x = (v0.crd[0] * t) + (0.5 * ac.crd[0] * Math.pow(t, 2));
-		double y = (v0.crd[1] * t) + (0.5 * ac.crd[1] * Math.pow(t, 2));
-		double z = (v0.crd[2] * t) + (0.5 * ac.crd[2] * Math.pow(t, 2));
-		return new Vector(x, y, z, "position"); //Solves for final position
+	private static Vector solveDX(Vector v0, Vector ac, Scalar time){
+		return Vector.addVectors(Vector.multiplyScalar(v0, time), Vector.multiplyScalar(Vector.multiplyScalar(ac, 0.5), time.pow(2))); //Solves for final position
 	};
 }

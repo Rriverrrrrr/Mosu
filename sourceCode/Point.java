@@ -18,17 +18,17 @@ import java.lang.Math;
 
 class Point{
 	Vector position = null;
-	Vector velocity = new Vector(0, 0, 0, "velocity");
-	Vector acceleration = new Vector(0, 0, 0, "acceleration");
-	public double mass;
-	static double time = 0.0;
+	Vector velocity = new Vector(0, 0, 0, Dim.vel);
+	Vector acceleration = new Vector(0, 0, 0, Dim.acc);
+	public Scalar mass = new Scalar(1, Dim.mas);
+	static Scalar time = new Scalar(0, Dim.tim);
 	
 	public Point(Vector pos){ //Creates point with position vector
 		position = pos;
 	}
 	
 	public Point(String pos){ //Creates point with coordinates in a string
-		position = new Vector(pos, "position");
+		position = new Vector(pos, Dim.len);
 	}
 	
 	public void setPos(Vector pos){ //Sets position
@@ -44,22 +44,23 @@ class Point{
 	}
 	
 	public void setMass(double m){ //Sets mass (Used in Gravity class)
-		mass = m;
+		mass.value = m;
 	}
 	
 	public void timeStep(double dt){ //Calculates values after a small amount of time
-		velocity.addVector(Vector.multiplyScalar(acceleration, dt)); //Adds acceleration vector multiplied by dt to velocity
-		position.addVector(Vector.multiplyScalar(velocity, dt)); //Adds velocity vector multiplied by dt to position
-		time += dt; //Modifies time
+		Scalar t = new Scalar(dt, Dim.tim);
+		velocity.addVector(Vector.multiplyScalar(acceleration, t)); //Adds acceleration vector multiplied by dt to velocity
+		position.addVector(Vector.multiplyScalar(velocity, t)); //Adds velocity vector multiplied by dt to position
+		time.add(t); //Modifies time
 	}
 	public String toString(){
-		return "Time (s): " + time + "\nPosition: " + position + "\nVelocity: " + velocity + "\n"; //Displays info about point
+		return "Time (s): " + time.value + "\nPosition: " + position + "\nVelocity: " + velocity + "\n"; //Displays info about point
 	}
 	
 	public static void main(String[] arguments){
 		Point p = new Point("0 0 0");
-		p.setAcc(Vector.conv("1 1 1", "acceleration"));
-		p.setVel(Vector.conv("-1 -1 -1", "velocity"));
+		p.setAcc(Vector.conv("1 1 1", Dim.acc));
+		p.setVel(Vector.conv("-1 -1 -1", Dim.vel));
 		
 		for (int i = 0; i < (int)Math.pow(2, 14); i++){
 			p.timeStep(1.0 / 128.0);
