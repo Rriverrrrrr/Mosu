@@ -20,7 +20,7 @@ import java.util.Arrays;
 class Mosu{
 	public static void main(String[] arguments){
 		//Print GNU license boiler plate
-		System.out.println("MOSU UNIVERSAL PHYSICS ENGINE v0.2, RELEASED 04-19-2026");
+		System.out.println("MOSU UNIVERSAL PHYSICS ENGINE v0.2.1, RELEASED 04-25-2026");
 		System.out.println("COPYRIGHT (C) 2026 RIVER OLSEN\n");
 		System.out.println("    This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n");
 		System.out.println("    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.\n");
